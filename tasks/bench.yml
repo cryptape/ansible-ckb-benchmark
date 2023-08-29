@@ -8,7 +8,6 @@
       {{ ckb_benchmark_workspace }}/ckb-bench bench \
           --rpc-urls {{ ckb_benchmark_rpc_urls | join(',') }} \
           --n-users  {{ ckb_benchmark_n_users }} \
-          --data-dir {{ ckb_benchmark_data_dir }} \
           --n-inout             {{ item.n_inout }} \
           --tx-interval-ms      {{ item.tx_interval_ms }} \
           --bench-time-ms       {{ item.bench_time_ms }} \
