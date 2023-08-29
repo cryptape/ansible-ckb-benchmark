@@ -17,12 +17,8 @@
   with_items:
     - { tx_interval_ms: 0, bench_time_ms: 300000, n_inout: 1 , concurrent_requests: 10 }
     - { tx_interval_ms: 0, bench_time_ms: 300000, n_inout: 2 , concurrent_requests: 10 }
-    - { tx_interval_ms: 0, bench_time_ms: 300000, n_inout: 5 , concurrent_requests: 10 }
-    - { tx_interval_ms: 0, bench_time_ms: 300000, n_inout: 10 , concurrent_requests: 10 }
-    - { tx_interval_ms: 0, bench_time_ms: 300000, n_inout: 20 , concurrent_requests: 10 }
-    - { tx_interval_ms: 0, bench_time_ms: 300000, n_inout: 50 , concurrent_requests: 10 }
-    - { tx_interval_ms: 0, bench_time_ms: 300000, n_inout: 100 , concurrent_requests: 10 }
-
+#    - { tx_interval_ms: 0, bench_time_ms: 300000, n_inout: 5 , concurrent_requests: 10 }
+#    - { tx_interval_ms: 0, bench_time_ms: 300000, n_inout: 10 , concurrent_requests: 10 }
   poll: 5
   async: 3600
 
