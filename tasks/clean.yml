@@ -1,6 +1,6 @@
 - name: Delete a ckb-bench directory
   become: true
   file:
-    path: {{ ckb_benchmark_workspace }}
+    path: "{{ ckb_benchmark_workspace }}"
     state: absent
     recurse: yes
