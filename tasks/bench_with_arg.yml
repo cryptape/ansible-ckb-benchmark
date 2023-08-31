@@ -1,0 +1,25 @@
+---
+- name: Benchmark Start
+  environment:
+    RUST_LOG: "info,ckb-bench=debug"
+    CKB_BENCH_OWNER_PRIVKEY: "{{ ckb_benchmark_owner_privkey }}"
+  shell:
+    cmd: |
+      {{ ckb_benchmark_workspace }}/ckb-bench bench \
+          --rpc-urls {{ ckb_benchmark_url }} \
+          --n-users  {{ ckb_benchmark_n_users }} \
+          --n-inout             {{ ckb_bench_n_inout }} \
+          --tx-interval-ms      {{ ckb_bench_tx_interval_ms }} \
+          --bench-time-ms       {{ ckb_bench_time_ms }} \
+          --concurrent-requests {{ ckb_bench_concurrent_requests }} \
+      | tee --append {{ ckb_benchmark_logfile }}
+  #    - { tx_interval_ms: 0, bench_time_ms: 300000, n_inout: 5 , concurrent_requests: 10 }
+  #    - { tx_interval_ms: 0, bench_time_ms: 300000, n_inout: 10 , concurrent_requests: 10 }
+  poll: 5
+  async: 3600
+
+- name: Generate Report
+  shell:
+    cmd: |
+      grep -o 'metrics: .*' {{ ckb_benchmark_logfile }} | sed 's/metrics: //' > {{ ckb_benchmark_jsonfile }}
+      grep -o 'markdown report: .*' {{ ckb_benchmark_logfile }} | sed 's/markdown report: //' > {{ ckb_benchmark_markdownfile }}

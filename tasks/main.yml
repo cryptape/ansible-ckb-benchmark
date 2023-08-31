@@ -26,3 +26,13 @@
 - include: bench.yml
   tags:
     - ckb_benchmark_start
+
+- include: miner.yml
+  become: true
+  tags:
+    - ckb_benchmark_miner
+
+- include: bench_with_arg.yml
+  tags:
+    - ckb_benchmark_miner_with_arg
+
