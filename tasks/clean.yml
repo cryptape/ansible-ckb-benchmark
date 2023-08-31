@@ -3,4 +3,3 @@
   file:
     path: "{{ ckb_benchmark_workspace }}"
     state: absent
-    recurse: yes
