@@ -1,0 +1,11 @@
+- name: Stoped CKB-Bench Miner
+  become: true
+  systemd:
+    name: ckb-bench-miner
+    state: stopped
+    daemon_reload: true
+    enabled: true
+
+- name: kill ckb-bench
+  become: true
+  command: "pkill ckb-bench"
