@@ -33,9 +33,9 @@
     - ckb_benchmark_miner_start
 
 
-- include: bench_with_arg.yml
+- include: bench_with_tps.yml
   tags:
-    - ckb_benchmark_start_with_arg
+    - ckb_benchmark_with_tps
 
 - include: stop.yml
   tags:

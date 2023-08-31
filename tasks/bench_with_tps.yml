@@ -11,6 +11,7 @@
           --n-inout             {{ ckb_bench_n_inout }} \
           --tx-interval-ms      {{ ckb_bench_tx_interval_ms }} \
           --bench-time-ms       {{ ckb_bench_time_ms }} \
+          --tps {{ ckb_bench_tps }} \
           --concurrent-requests {{ ckb_bench_concurrent_requests }}\
       | tee --append {{ ckb_benchmark_logfile }}
   #    - { tx_interval_ms: 0, bench_time_ms: 300000, n_inout: 5 , concurrent_requests: 10 }
@@ -31,5 +32,5 @@
 
 - name: tar data
   shell:
-    cmd: | 
+    cmd: |
       tar -zcvf {{ ckb_benchmark_workspace }}/data.tar.gz {{ ckb_benchmark_data_dir }}
