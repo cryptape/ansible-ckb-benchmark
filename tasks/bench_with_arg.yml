@@ -12,14 +12,24 @@
           --tx-interval-ms      {{ ckb_bench_tx_interval_ms }} \
           --bench-time-ms       {{ ckb_bench_time_ms }} \
           --concurrent-requests {{ ckb_bench_concurrent_requests }}\
-      | tee --append {{ ckb_benchmark_logfile }} && cp report.html {{ ckb_benchmark_data_dir }} && cp report.json {{ ckb_benchmark_data_dir }}
+      | tee --append {{ ckb_benchmark_logfile }}
   #    - { tx_interval_ms: 0, bench_time_ms: 300000, n_inout: 5 , concurrent_requests: 10 }
   #    - { tx_interval_ms: 0, bench_time_ms: 300000, n_inout: 10 , concurrent_requests: 10 }
   poll: 5
   async: 3600
+
+- name: cp ckb bench file
+  shell:
+    cmd: |
+      cp report.html {{ ckb_benchmark_data_dir }}/report.$(date '+%Y-%m-%d-%H-%M').html && cp report.json {{ ckb_benchmark_data_dir }}/report.$(date '+%Y-%m-%d-%H-%M').json
 
 - name: Generate Report
   shell:
     cmd: |
       grep -o 'metrics: .*' {{ ckb_benchmark_logfile }} | sed 's/metrics: //' > {{ ckb_benchmark_jsonfile }}
       grep -o 'markdown report: .*' {{ ckb_benchmark_logfile }} | sed 's/markdown report: //' > {{ ckb_benchmark_markdownfile }}
+
+- name: tar data
+  shell:
+    cmd: | 
+      tar -zcvf {{ ckb_benchmark_workspace }}/data.tar.gz {{ ckb_benchmark_data_dir }}
