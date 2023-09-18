@@ -5,7 +5,7 @@
 
 - name: Benchmark Start
   environment:
-    RUST_LOG: "info,ckb-bench=debug"
+#    RUST_LOG: "info,ckb-bench="
     CKB_BENCH_OWNER_PRIVKEY: "{{ ckb_benchmark_owner_privkey }}"
   shell:
     cmd: |
