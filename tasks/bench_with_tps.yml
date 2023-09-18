@@ -30,7 +30,7 @@
 - name: cp ckb bench file
   shell:
     cmd: |
-      cp report.html {{ ckb_benchmark_data_dir }}/report.{{ ckb_bench_tps }}.{{ begin_timestamp }}.{{ end_timestamp }}.html && cp report.json {{ ckb_benchmark_data_dir }}/report.{{ ckb_bench_tps }}.{{ ckb_bench_time_ms }}.{{ begin_timestamp }}.{{ end_timestamp }}.json
+      cp report.html {{ ckb_benchmark_data_dir }}/report.{{ ckb_bench_tps }}.{{ ckb_bench_time_ms }}.{{ begin_timestamp }}.{{ end_timestamp }}.html && cp report.json {{ ckb_benchmark_data_dir }}/report.{{ ckb_bench_tps }}.{{ ckb_bench_time_ms }}.{{ begin_timestamp }}.{{ end_timestamp }}.json
 
 - name: Generate Report
   shell:
