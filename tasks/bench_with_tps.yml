@@ -1,7 +1,7 @@
 ---
 - name: Get current timestamp
   set_fact:
-    begin_timestamp: "{{ ansible_date_time.epoch }}"
+    begin_timestamp: "{{ lookup('pipe', 'date +%s') }}"
 
 - name: Benchmark Start
   environment:
@@ -25,7 +25,7 @@
 
 - name: Get current timestamp
   set_fact:
-    end_timestamp: "{{ ansible_date_time.epoch }}"
+    end_timestamp: "{{ lookup('pipe', 'date +%s') }}"
 
 - name: cp ckb bench file
   shell:
