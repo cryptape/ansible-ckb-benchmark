@@ -37,6 +37,10 @@
   tags:
     - ckb_benchmark_with_tps
 
+- include: bench_with_tps_and_fee.yml
+  tags:
+    - bench_with_tps_and_fee
+
 - include: stop.yml
   tags:
     - ckb_bench_stop

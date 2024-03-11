@@ -1,0 +1,46 @@
+---
+- name: Get current timestamp
+  set_fact:
+    begin_timestamp: "{{ lookup('pipe', 'date +%s') }}"
+
+- name: Benchmark Start
+  environment:
+#    RUST_LOG: "info,ckb-bench="
+    CKB_BENCH_OWNER_PRIVKEY: "{{ ckb_benchmark_owner_privkey }}"
+  shell:
+    cmd: |
+      echo '{"deps":[],"_type":{"code_hash":"0x0000000000000000000000000000000000000000000000000000000000000000","hash_type":"data1","args":"0x"},"output_data":"0x","min_fee": {{ ckb_bench_min_fee }} ,"max_fee": {{ ckb_bench_max_fee }} }' > {{ ckb_benchmark_workspace }}/tx.json
+      {{ ckb_benchmark_workspace }}/ckb-bench bench \
+          --rpc-urls {{ ckb_benchmark_url }} \
+          --n-users  {{ ckb_benchmark_n_users }} \
+          --n-inout             {{ ckb_bench_n_inout }} \
+          --tx-interval-ms      {{ ckb_bench_tx_interval_ms }} \
+          --bench-time-ms       {{ ckb_bench_time_ms }} \
+          --tps {{ ckb_bench_tps }} \
+          --concurrent-requests {{ ckb_bench_concurrent_requests }} \
+          --add-tx-params tx.json \
+      | tee --append {{ ckb_benchmark_logfile }}
+
+  #    - { tx_interval_ms: 0, bench_time_ms: 300000, n_inout: 10 , concurrent_requests: 10 }
+  poll: 5
+  async: 3600
+
+- name: Get current timestamp
+  set_fact:
+    end_timestamp: "{{ lookup('pipe', 'date +%s') }}"
+
+- name: cp ckb bench file
+  shell:
+    cmd: |
+      cp report.html {{ ckb_benchmark_data_dir }}/report.{{ ckb_bench_tps }}.{{ ckb_bench_time_ms }}.{{ begin_timestamp }}.{{ end_timestamp }}.html && cp report.json {{ ckb_benchmark_data_dir }}/report.{{ ckb_bench_tps }}.{{ ckb_bench_time_ms }}.{{ begin_timestamp }}.{{ end_timestamp }}.json
+
+- name: Generate Report
+  shell:
+    cmd: |
+      grep -o 'metrics: .*' {{ ckb_benchmark_logfile }} | sed 's/metrics: //' > {{ ckb_benchmark_jsonfile }}
+      grep -o 'markdown report: .*' {{ ckb_benchmark_logfile }} | sed 's/markdown report: //' > {{ ckb_benchmark_markdownfile }}
+
+- name: tar data
+  shell:
+    cmd: |
+      tar -zcvf {{ ckb_benchmark_workspace }}/data.tar.gz {{ ckb_benchmark_data_dir }}
