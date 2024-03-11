@@ -10,7 +10,7 @@
   shell:
     cmd: |
       echo '{"deps":[],"_type":{"code_hash":"0x0000000000000000000000000000000000000000000000000000000000000000","hash_type":"data1","args":"0x"},"output_data":"0x","min_fee": {{ ckb_bench_min_fee }} ,"max_fee": {{ ckb_bench_max_fee }} }' > {{ ckb_benchmark_workspace }}/tx.json
-      {{ ckb_benchmark_workspace }}/ckb-bench bench \
+      {{ ckb_benchmark_workspace }}/ckb-bench bench --is-smoking-test \
           --rpc-urls {{ ckb_benchmark_url }} \
           --n-users  {{ ckb_benchmark_n_users }} \
           --n-inout             {{ ckb_bench_n_inout }} \
@@ -23,7 +23,7 @@
 
   #    - { tx_interval_ms: 0, bench_time_ms: 300000, n_inout: 10 , concurrent_requests: 10 }
   poll: 5
-  async: 3600
+  async: 14400
 
 - name: Get current timestamp
   set_fact:
