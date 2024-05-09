@@ -48,3 +48,7 @@
 - include: clean.yml
   tags:
     - ckb_bench_clean
+
+- include: ckb_miner.yml
+  tags:
+    - ckb_bench_miner

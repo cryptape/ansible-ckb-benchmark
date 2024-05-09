@@ -1,0 +1,15 @@
+---
+- name: Get current timestamp
+  set_fact:
+    begin_timestamp: "{{ lookup('pipe', 'date +%s') }}"
+
+- name: ckb  miner
+  shell:
+    cmd: |
+      {{ ckb_benchmark_workspace }}/ckb-bench miner  \
+          --rpc-urls {{ ckb_benchmark_url }} \
+          --mining-interval-ms {{ ckb_mining_interval_ms }} \
+          --min-tx-size {{ ckb_bench_min_tx_size }} \
+          --n-blocks {{ ckb_n_blocks }}
+  poll: 5
+  async: 3600
