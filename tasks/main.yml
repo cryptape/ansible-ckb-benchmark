@@ -1,54 +1,102 @@
 ---
-- include: setup.yml
-  become: true
+- include_tasks:
+    file: setup.yml
+    apply:
+      become: true
+      tags:
+        - ckb_benchmark_install
   tags:
     - ckb_benchmark_install
 
-- include: install.yml
-  become: true
+- include_tasks:
+    file: install.yml
+    apply:
+      become: true
+      tags:
+        - ckb_benchmark_install
   tags:
     - ckb_benchmark_install
 
-- include: miner.yml
-  become: true
+- include_tasks:
+    file: miner.yml
+    apply:
+      become: true
+      tags:
+        - ckb_benchmark_prepare
   tags:
     - ckb_benchmark_prepare
 
-- include: prepare.yml
+- include_tasks:
+    file: prepare.yml
+    apply:
+      tags:
+        - ckb_benchmark_prepare
   tags:
     - ckb_benchmark_prepare
 
-- include: miner.yml
-  become: true
+- include_tasks:
+    file: miner.yml
+    apply:
+      become: true
+      tags:
+        - ckb_benchmark_start
   tags:
     - ckb_benchmark_start
 
-- include: bench.yml
+- include_tasks:
+    file: bench.yml
+    apply:
+      tags:
+        - ckb_benchmark_start
   tags:
     - ckb_benchmark_start
 
-- include: miner.yml
-  become: true
+- include_tasks:
+    file: miner.yml
+    apply:
+      become: true
+      tags:
+        - ckb_benchmark_miner_start
   tags:
     - ckb_benchmark_miner_start
 
 
-- include: bench_with_tps.yml
+- include_tasks:
+    file: bench_with_tps.yml
+    apply:
+      tags:
+        - ckb_benchmark_with_tps
   tags:
     - ckb_benchmark_with_tps
 
-- include: bench_with_tps_and_fee.yml
+- include_tasks:
+    file: bench_with_tps_and_fee.yml
+    apply:
+      tags:
+        - bench_with_tps_and_fee
   tags:
     - bench_with_tps_and_fee
 
-- include: stop.yml
+- include_tasks:
+    file: stop.yml
+    apply:
+      tags:
+        - ckb_bench_stop
   tags:
     - ckb_bench_stop
 
-- include: clean.yml
+- include_tasks:
+    file: clean.yml
+    apply:
+      tags:
+        - ckb_bench_clean
   tags:
     - ckb_bench_clean
 
-- include: ckb_miner.yml
+- include_tasks:
+    file: ckb_miner.yml
+    apply:
+      tags:
+        - ckb_bench_miner
   tags:
     - ckb_bench_miner
